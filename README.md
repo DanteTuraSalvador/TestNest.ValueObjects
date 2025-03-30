@@ -283,3 +283,44 @@ catch (ArgumentException ex)
 | **Equality**  | 42       |
 | **HashCode**  | 38       |
 | **Creation**  | 55       |
+
+## 🤝 Contributing
+
+Pull requests are welcome! Please:
+
+✅ Maintain **100% test coverage**  
+✅ Follow **existing code style**  
+✅ Add **documentation for new features**  
+
+## 📜 License
+
+This project is open-source and free to use.
+
+## 📁 Project Structure
+
+```bash
+TestNest.ValueObjects/
+├── src/
+│   ├── TestNest.ValueObjects.Domain/
+│   │   ├── Exceptions
+│   │   │    ├── CurrencyException.cs               # Custom exceptions
+│   │   │    └── PriceException.cs                  # Custom exceptions
+│   │   ├── ValueObjects
+│   │   │    └── Common                             
+│   │   │    │    └── ValueObject.cs                # Base class
+│   │   │    ├── Currency.cs                        # Sample implementation
+│   │   │    └── Price.cs                           # Sample implementation
+│   │   └── TestNest.StronglyTypeId.csproj
+│   │
+│   └── TestNest.ValueObjects.Console/                                           
+│   │   └── Program.cs
+│   │   └── TestNest.ValueObjects.Console
+│
+├── tests/
+│   ├── TestNest.StronglyTypeId.Test/
+│   │   ├── CurrencyTests.cs                        # Unit tests
+│   │   ├── PriceTests.cs                           # Unit tests
+│   │   └── TestNest.ValueObjects.Test.csproj
+│
+├── README.md
+└── LICENSE
