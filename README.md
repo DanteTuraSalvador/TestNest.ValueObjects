@@ -176,3 +176,54 @@ public sealed class Currency : ValueObject
 }
 
 ```
+## 🔹 Example: Price value object using Currency value object
+
+
+```csharp
+public sealed class Price : ValueObject
+{
+    
+    private static readonly Lazy<Price> _lazyEmpty =
+        new Lazy<Price>(() => new Price());
+    public static Price Empty => _lazyEmpty.Value;
+    public static Price Zero => _lazyEmpty.Value;
+
+    public decimal StandardPrice { get; private set; } 
+    public decimal PeakPrice { get; private set; }   
+    public Currency Currency { get; private set; }    
+
+    private Price() => (StandardPrice, PeakPrice, Currency) = (0, 0, Currency.Empty);
+
+    private Price(decimal standardPrice, decimal peakPrice, Currency currency) =>
+        (StandardPrice, PeakPrice, Currency) = (standardPrice, peakPrice, currency);
+
+    public static Price Create(decimal standardPrice, decimal peakPrice, Currency currency)
+    {
+        if (standardPrice < 0) throw PriceException.NegativeStandardPrice();
+        if (peakPrice < 0) throw PriceException.NegativePeakPrice();
+        if (peakPrice < standardPrice) throw PriceException.PeakBelowStandard();
+        if (currency == null) throw PriceException.NullCurrency();
+
+        return new Price(standardPrice, peakPrice, currency);
+    }
+
+    public Price WithStandardPrice(decimal newStandardPrice)
+        => Create(newStandardPrice, PeakPrice, Currency);
+
+    public Price WithPeakPrice(decimal newPeakPrice)
+        => Create(StandardPrice, newPeakPrice, Currency);
+
+    public Price WithCurrency(Currency newCurrency)
+        => Create(StandardPrice, PeakPrice, newCurrency);
+
+    protected override IEnumerable<object?> GetAtomicValues()
+    {
+        yield return StandardPrice;
+        yield return PeakPrice;
+        yield return Currency;
+    }
+
+    public override string ToString() =>
+        $"{Currency.Symbol}{StandardPrice:F2} / {Currency.Symbol}{PeakPrice:F2} (Peak)";
+}
+```
