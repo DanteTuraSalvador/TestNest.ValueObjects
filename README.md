@@ -2,6 +2,8 @@
 
 A .NET 8.0 implementation of the Value Object pattern for Domain-Driven Design. This library provides a foundation for creating self-validating, immutable domain types that eliminate primitive obsession.
 
+**Project Board:** [Azure DevOps](https://dev.azure.com/tengtium-io/ValueObjects)
+
 ## Features
 
 - **Immutable by design** - All properties are read-only after creation
